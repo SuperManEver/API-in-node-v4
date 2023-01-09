@@ -2,8 +2,11 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "dist",
+    "module": "commonjs",
     // "strict": true,
-    "lib": ["DOM", "esnext"],
-    "esModuleInterop": true
-  }
+    "lib": ["DOM", "esnext"]
+    // "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
