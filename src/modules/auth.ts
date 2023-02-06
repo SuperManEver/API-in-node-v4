@@ -4,7 +4,6 @@ import { JWT_SECRET } from "../config";
 
 export const createJWT = (user: any) => {
   const data = { id: user.id, username: user.username };
-
   const token = jwt.sign(data, JWT_SECRET);
 
   return token;
@@ -16,6 +15,7 @@ export const protect = (req, res, next) => {
   if (!bearer) {
     res.status(401);
     res.send("Not authorized");
+
     return;
   }
 
