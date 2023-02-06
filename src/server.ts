@@ -10,15 +10,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req: any, _, next) => {
-  req.shhh_secret = "doggy";
-
-  next();
-});
-
 app.get("/", (req: any, res) => {
-  console.log(req.shhh_secret);
-
   res.status(200);
   res.json({ msg: "hello" });
 });
