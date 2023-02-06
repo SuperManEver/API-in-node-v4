@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 
-import { JWT_SECRET } from "../config";
+import { JWT_SECRET, ENCRYPTION_SALT } from "../config";
 
 export const createJWT = (user: any) => {
   const data = { id: user.id, username: user.username };
@@ -40,4 +41,12 @@ export const protect = (req, res, next) => {
     res.send("Not authorized");
     return;
   }
+};
+
+export const comparePasswords = (password, hash) => {
+  return bcrypt.compare(password, hash);
+};
+
+export const hashPassword = (password) => {
+  return bcrypt.hash(password, ENCRYPTION_SALT);
 };
