@@ -1,11 +1,11 @@
-import jwt from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 
 import { JWT_SECRET, ENCRYPTION_SALT } from "../config";
 
 export const createJWT = (user: any) => {
   const data = { id: user.id, username: user.username };
-  const token = jwt.sign(data, JWT_SECRET);
+  const token = sign(data, JWT_SECRET);
 
   return token;
 };
@@ -30,7 +30,7 @@ export const protect = (req, res, next) => {
   }
 
   try {
-    const payload = jwt.verify(token, JWT_SECRET);
+    const payload = verify(token, JWT_SECRET);
     req.user = payload;
     console.log(payload);
     next();
