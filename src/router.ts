@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, validationResult } from "express-validator";
+import { body, oneOf } from "express-validator";
 
 import { handleInputErrors } from "./middlewares";
 
@@ -42,7 +42,14 @@ router.get("/update/:id", (req, res) => {});
 
 router.post(
   "/update",
-  body("title").isLength({ min: 4 }),
+  body("title").optional(),
+  oneOf([
+    body("IN_PROGRESS"),
+    body("LIVE"),
+    body("DEPRECATED"),
+    body("ARCHIVED"),
+  ]),
+  body("version").optional(),
   body("body").isLength({ min: 4 }),
   handleInputErrors,
   (req, res) => {}
@@ -50,7 +57,14 @@ router.post(
 
 router.put(
   "/update/:id",
-  body("title").isLength({ min: 4 }),
+  body("title").optional(),
+  oneOf([
+    body("IN_PROGRESS"),
+    body("LIVE"),
+    body("DEPRECATED"),
+    body("ARCHIVED"),
+  ]),
+  body("version").optional(),
   body("body").isLength({ min: 4 }),
   handleInputErrors,
   (req, res) => {}
