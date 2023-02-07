@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 
+import { handleInputErrors } from "./middlewares";
+
 const router = Router();
 /**
  * Product
@@ -11,20 +13,22 @@ router.get("/product", (req: any, res) => {
 
 router.get("/product/:id", (req, res) => {});
 
-router.post("/product", (req, res) => {});
+router.post(
+  "/product",
+  body("name").isLength({ min: 4, max: 255 }),
+  handleInputErrors,
+  (req, res) => {}
+);
 
-router.put("/product/:id", body("name").isLength({ min: 4 }), (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    res.status(400);
-    res.json({ errors: errors.array() });
-    return;
+router.put(
+  "/product/:id",
+  body("name").isLength({ min: 4 }),
+  handleInputErrors,
+  (req, res) => {
+    res.status(200);
+    res.json({ products: [] });
   }
-
-  res.status(200);
-  res.json({ products: [] });
-});
+);
 
 router.delete("/product/:id", (req, res) => {});
 
@@ -36,9 +40,21 @@ router.get("/update", (req, res) => {});
 
 router.get("/update/:id", (req, res) => {});
 
-router.post("/update", (req, res) => {});
+router.post(
+  "/update",
+  body("title").isLength({ min: 4 }),
+  body("body").isLength({ min: 4 }),
+  handleInputErrors,
+  (req, res) => {}
+);
 
-router.put("/update/:id", (req, res) => {});
+router.put(
+  "/update/:id",
+  body("title").isLength({ min: 4 }),
+  body("body").isLength({ min: 4 }),
+  handleInputErrors,
+  (req, res) => {}
+);
 
 router.delete("/update/:id", (req, res) => {});
 
