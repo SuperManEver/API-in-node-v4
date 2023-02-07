@@ -2,15 +2,14 @@ import { Router } from "express";
 import { body, oneOf } from "express-validator";
 
 import { handleInputErrors } from "./middlewares";
-import { getProducts } from "./handlers/product";
+import { getProducts, getOneProduct } from "./handlers/product";
 
 const router = Router();
 /**
  * Product
  */
 router.get("/product", getProducts);
-
-router.get("/product/:id", (req, res) => {});
+router.get("/product/:id", getOneProduct);
 
 router.post(
   "/product",
