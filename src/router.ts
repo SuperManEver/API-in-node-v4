@@ -2,14 +2,13 @@ import { Router } from "express";
 import { body, oneOf } from "express-validator";
 
 import { handleInputErrors } from "./middlewares";
+import { getProducts } from "./handlers/product";
 
 const router = Router();
 /**
  * Product
  */
-router.get("/product", (req: any, res) => {
-  res.json({ message: "list of products" });
-});
+router.get("/product", getProducts);
 
 router.get("/product/:id", (req, res) => {});
 
@@ -42,15 +41,8 @@ router.get("/update/:id", (req, res) => {});
 
 router.post(
   "/update",
-  body("title").optional(),
-  oneOf([
-    body("IN_PROGRESS"),
-    body("LIVE"),
-    body("DEPRECATED"),
-    body("ARCHIVED"),
-  ]),
-  body("version").optional(),
-  body("body").isLength({ min: 4 }),
+  body("title").exists().isString(),
+  body("body").exists().isString(),
   handleInputErrors,
   (req, res) => {}
 );
