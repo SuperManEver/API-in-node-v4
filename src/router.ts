@@ -2,7 +2,7 @@ import { Router } from "express";
 import { body, oneOf } from "express-validator";
 
 import { handleInputErrors } from "./middlewares";
-import { getProducts, getOneProduct } from "./handlers/product";
+import { getProducts, getOneProduct, createProduct } from "./handlers/product";
 
 const router = Router();
 /**
@@ -13,9 +13,9 @@ router.get("/product/:id", getOneProduct);
 
 router.post(
   "/product",
-  body("name").isLength({ min: 4, max: 255 }),
+  body("name").isString(),
   handleInputErrors,
-  (req, res) => {}
+  createProduct
 );
 
 router.put(
