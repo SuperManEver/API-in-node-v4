@@ -91,8 +91,10 @@ export const deleteProduct = async (req, res) => {
 
   const deleted = prisma.product.delete({
     where: {
-      id,
-      id_belongsToId: userId,
+      id_belongsToId: {
+        id,
+        belongsToId: userId,
+      },
     },
   });
 

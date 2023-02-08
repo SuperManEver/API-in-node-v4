@@ -26,7 +26,7 @@ router.post(
 
 router.put(
   "/product/:id",
-  body("name").isLength({ min: 4 }),
+  body("name").isString(),
   handleInputErrors,
   updateProduct
 );
