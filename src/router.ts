@@ -10,6 +10,8 @@ import {
   deleteProduct,
 } from "./handlers/product";
 
+import { getOneUpdate } from "./handlers/update";
+
 const router = Router();
 /**
  * Product
@@ -38,8 +40,7 @@ router.delete("/product/:id", deleteProduct);
  */
 
 router.get("/update", (req, res) => {});
-
-router.get("/update/:id", (req, res) => {});
+router.get("/update/:id", getOneUpdate);
 
 router.post(
   "/update",
