@@ -2,7 +2,13 @@ import { Router } from "express";
 import { body, oneOf } from "express-validator";
 
 import { handleInputErrors } from "./middlewares";
-import { getProducts, getOneProduct, createProduct } from "./handlers/product";
+import {
+  getProducts,
+  getOneProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "./handlers/product";
 
 const router = Router();
 /**
@@ -22,13 +28,10 @@ router.put(
   "/product/:id",
   body("name").isLength({ min: 4 }),
   handleInputErrors,
-  (req, res) => {
-    res.status(200);
-    res.json({ products: [] });
-  }
+  updateProduct
 );
 
-router.delete("/product/:id", (req, res) => {});
+router.delete("/product/:id", deleteProduct);
 
 /**
  * Update

@@ -59,3 +59,40 @@ export const createProduct = async (req, res) => {
 
   res.json({ data: product });
 };
+
+/**
+ * Update a product
+ */
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const updated = await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+    },
+  });
+
+  res.json({
+    data: updated,
+  });
+};
+
+/**
+ * Delete a product
+ */
+
+export const deleteProduct = async (req, res) => {
+  const { id } = res.params;
+
+  const deleted = prisma.product.delete({
+    where: {
+      id,
+    },
+  });
+
+  res.json({ data: deleted });
+};
