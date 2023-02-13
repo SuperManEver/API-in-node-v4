@@ -4,20 +4,22 @@ import prisma from "../db";
  * Get all
  */
 export const getUpdates = async (req, res) => {
-  //   prisma.update.findMany();
+  const { id: userId } = req.user;
 
-  const user = await prisma.user.findUnique({
+  const products = await prisma.product.findMany({
     where: {
-      id: req.user.id,
+      belongsToId: userId,
     },
     include: {
-      products: true,
+      updates: true,
     },
   });
 
-  res.json({
-    data: user.products,
-  });
+  const updates = products.reduce((acc, product) => {
+    return [...acc, ...product.updates];
+  }, []);
+
+  res.json({ data: updates });
 };
 
 /**
@@ -45,18 +47,31 @@ export const getOneUpdate = async (req, res) => {
 /**
  * Create one
  */
-export const createProduct = async (req, res) => {
-  const { id } = req.user;
-  const { name } = req.body;
+export const createUpdate = async (req, res) => {
+  const { title, body, productId } = req.body;
 
-  const product = await prisma.product.create({
-    data: {
-      name,
-      belongsToId: id,
+  const product = await prisma.product.findUnique({
+    where: {
+      id: productId,
     },
   });
 
-  res.json({ data: product });
+  if (!product) {
+    res.status(401);
+    res.json({ message: "Invalid data" });
+
+    return;
+  }
+
+  const update = await prisma.update.create({
+    data: {
+      title,
+      body,
+      productId,
+    },
+  });
+
+  res.json({ data: update });
 };
 
 /**
