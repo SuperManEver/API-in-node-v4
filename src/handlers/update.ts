@@ -67,7 +67,7 @@ export const createUpdate = async (req, res) => {
     data: {
       title,
       body,
-      productId,
+      product: { connect: { id: product.id } },
     },
   });
 
@@ -113,7 +113,6 @@ export const updateUpdate = async (req, res) => {
 /**
  * Delete one
  */
-
 export const deleteUpdate = async (req, res) => {
   const products = await prisma.product.findMany({
     where: {
