@@ -48,7 +48,7 @@ export const getOneUpdate = async (req, res) => {
  * Create one
  */
 export const createUpdate = async (req, res) => {
-  const { title, body, productId } = req.body;
+  const { productId, title, body } = req.body;
 
   const product = await prisma.product.findUnique({
     where: {
